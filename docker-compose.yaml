@@ -1,0 +1,57 @@
+version: "3.8"
+
+services:
+
+  auth:
+    build:
+      context: .
+      dockerfile: Dockerfile.auth
+    ports:
+      - "8081:8080"
+    environment:
+      STREAM_KEY: ${STREAM_KEY} 
+
+  snapshot:
+    image: jrottenberg/ffmpeg:4.4-ubuntu
+    entrypoint: ["/bin/sh","-c","mkdir -p /data/html/snapshots && \
+      while true; do \
+        export TIMESTAMP=$(date +'%Y%m%d_%H%M%S'); \
+        ffmpeg -y -i http://localhost/hls/${STREAM_KEY}/index.m3u8 \
+          -frames:v 1 -q:v 2 /data/html/snapshots/${TIMESTAMP}.jpg && \
+        cp /data/html/snapshots/${TIMESTAMP}.jpg /data/html/snapshot.jpg; \
+        sleep 15; \
+      done"]
+    volumes:
+      - ./html:/data/html
+    network_mode: "service:nginx"
+    restart: unless-stopped
+
+  nginx:
+    build:
+      context: ./nginx
+    ports:
+      - "1935:1935"
+    volumes:
+      - ./hls:/data/hls
+      - ./html:/data/html:ro
+    restart: unless-stopped
+
+  caddy:
+    image: caddy:latest
+    ports:
+      - "80:80"
+      - "443:443"
+    environment:
+      STREAM_KEY: ${STREAM_KEY}
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy_data:/data
+      - caddy_config:/config
+      - ./hls:/data/hls:ro
+      - ./html:/data/html:ro
+    depends_on:
+      - nginx
+
+volumes:
+  caddy_data:
+  caddy_config:

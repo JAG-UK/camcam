@@ -1,0 +1,53 @@
+# Production (HTTPS)
+camcam.cityrc.co.uk {
+  encode gzip
+  tls jon.geater@gmail.com
+
+  # Serve the main site from the html mount
+  root * /data/html
+  file_server
+
+  # Proxy HLS files from the nginx container
+  handle_path /hls/* {
+    reverse_proxy nginx:80
+    header Cache-Control "no-cache"
+  }
+
+  # Proxy snapshot for serving via nginx too
+  handle /snapshot.jpg {
+    reverse_proxy nginx:80
+    header Cache-Control "no-cache"
+  }
+
+  # Proxy the stream to public
+  handle_path /live/* {
+    rewrite * /hls/{env.STREAM_KEY}{uri}
+    reverse_proxy nginx:80
+    header Cache-Control "no-cache"
+  }
+}
+
+# LOCAL DEV (HTTP)
+http://localhost {
+  encode gzip
+
+  root * /data/html
+  file_server
+
+  handle_path /hls/* {
+    reverse_proxy nginx:80
+    header Cache-Control "no-cache"
+  }
+
+  handle_path /live/* {
+    rewrite * /hls/{env.STREAM_KEY}{uri}
+    reverse_proxy nginx:80
+    header Cache-Control "no-cache"
+  }
+
+  handle /snapshot.jpg {
+    reverse_proxy nginx:80
+    header Cache-Control "no-cache"
+  }
+
+}
