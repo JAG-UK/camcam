@@ -2,13 +2,12 @@ import os
 from flask import Flask, request
 
 app = Flask(__name__)
-
-# STREAM_KEY = "mysecretkey" 
+ 
 STREAM_KEY = os.getenv("STREAM_KEY")
 
-@app.route('/auth', methods=['POST'])
+@app.route('/auth', methods=['GET', 'POST'])
 def auth():
-    name = request.form.get('name')
+    name = request.args.get('name') or request.form.get('name')
     print(f' - - - - - Checking ${name} against ${STREAM_KEY}')
     if name == STREAM_KEY:
         return "", 200
