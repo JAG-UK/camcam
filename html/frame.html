@@ -18,6 +18,7 @@
 
 <video
   id="video"
+  muted
   controls
   autoplay
   playsinline
@@ -36,9 +37,10 @@
   const isSleeping = (h >= 22 || h < 6);
 
   function showStream() {
-    // hide the placeholder, show video
+    // hide the placeholder, show video, force playback start
     holding.style.display = "none";
     video.style.display   = "block";
+    video.play().catch(()=>{/* swallow play promise errors */});
   }
 
   if (isSleeping) {
