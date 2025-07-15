@@ -3,6 +3,14 @@ camcam.cityrc.co.uk {
   encode gzip
   tls jon.geater@gmail.com
 
+  # Do not serve historic snapshots
+  @snapshots {
+    path /snapshots/*
+  } 
+  handle @snapshots {
+    respond “Forbidden” 403
+  }
+
   # Serve the main site from the html mount
   root * /data/html
   file_server
@@ -13,7 +21,7 @@ camcam.cityrc.co.uk {
     header Cache-Control "no-cache"
   }
 
-  # Proxy snapshot for serving via nginx too
+  # Proxy latest snapshot to public
   handle /snapshot.jpg {
     reverse_proxy nginx:80
     header Cache-Control "no-cache"
