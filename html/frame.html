@@ -31,13 +31,20 @@
   const video   = document.getElementById("video");
   const holding = document.getElementById("holding");
 
+  const now = new Date();
+  const h   = now.getHours();
+  const isSleeping = (h >= 22 || h < 6);
+
   function showStream() {
     // hide the placeholder, show video
     holding.style.display = "none";
     video.style.display   = "block";
   }
 
-  if (Hls.isSupported()) {
+  if (isSleeping) {
+    holding.src = "https://camcam.cityrc.co.uk/offlineposter.png"
+    holding.alt = "Offline between 22:00-06:00"
+  } else if (Hls.isSupported()) {
     const hlsConfig = {
       maxBufferLength: 60,         // seconds of buffer
       liveSyncDuration: 20,        // try to stay 20s behind live
