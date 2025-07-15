@@ -13,6 +13,9 @@ services:
 
   snapshot:
     image: jrottenberg/ffmpeg:4.4-ubuntu
+    environment:
+      STREAM_KEY: ${STREAM_KEY}
+      SNAPSHOT_INTERVAL: ${SNAPSHOT_INTERVAL}
     volumes:
       - ./html:/data/html
       - ./snapshot.sh:/usr/local/bin/snapshot.sh:ro
