@@ -40,6 +40,8 @@ services:
       - "443:443"
     environment:
       STREAM_KEY: ${STREAM_KEY}
+      TLS_EMAIL: ${TLS_EMAIL}
+      TLS_DOMAIN: ${TLS_DOMAIN}
     volumes:
       - ./Caddyfile:/etc/caddy/Caddyfile:ro
       - caddy_data:/data

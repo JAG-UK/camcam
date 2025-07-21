@@ -1,7 +1,7 @@
 # Production (HTTPS)
-camcam.cityrc.co.uk {
+{$TLS_DOMAIN} {
   encode gzip
-  tls jon.geater@gmail.com
+  tls {env.TLS_EMAIL}
 
   # Do not serve historic snapshots
   @snapshots {
