@@ -61,3 +61,16 @@ If you want more than just a full screen video, the stream can be embedded into 
 
 It is quite likely that you will experience issues with the `Content Security Policy` of the website not wishing to serve content from the remote source. I cannot advise on how to fix this in detail becasue many hosting services are different and vary in their support for editing CSP headers, but I'm sure their help desk will tell you how to do it.
 
+## Debugging and local testing
+
+### Cloud server software:
+
+The software supports local testing over HTTP so that you can make changes or make sure thigs are OK before gettign into cloud server configuration.
+
+Simply set all the env vars in a terminal and then `docker comopose up --build` and it should all run. Errors will be reported in the terminal.
+
+### Raspberry Pi
+
+ * Ensure the Pi can route to port 1935 on the local development machine.
+ * Stop the `systemctl` service (it'll fight with your test processes). Don't forget to re-enable it when you're done!
+ * In a terminal, run the `stream-helper.sh` directly, replacing the RTMP target with your test machine's IP address. `ffmpeg` will tell you any errors it encounters. If it claims 'Device is in use' or similar, hunt down and kill other `ffmpeg` or `stream-helper` processes.
