@@ -31,9 +31,20 @@ Software:
 
 #### On the Raspberry Pi:
 
-TODO: Add the stream-helper script to the repo
-TODO: Edit the script with your STREAM KEY (or read it from the environment)
-TODO: Write a script that sets up the resiliant restart service with `systemctl`
+1. Clone this repo: `git clone https://github.com/JAG-UK/camcam.git`
+1. Go to the Pi scripts directory `cd rpi`
+1. Edit the upload script with your variables `vi stream-uploader.sh`
+1. Register as a resident service and start the stream: `sudo ./register-service.sh`
+
+Bonus points: scheduled hours
+
+If you want to have the camera feed automatically start and stop at certain times of day (eg 06:00-22:00), edit your crontab to look like this:
+
+```
+# Stream between 06:00 and 22:00
+0 6 * * *  sudo systemctl start stream-uploader.service
+0 22 * * * sudo systemctl stop stream-uploader.service
+```
 
 #### On the cloud server:
 
