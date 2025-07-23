@@ -4,7 +4,7 @@ See it in action at https://cityrc.co.uk/camcam
 
 ## Overview
 
-<img width="1356" height="362" alt="camcam_diagram" src="https://github.com/user-attachments/assets/c3122eb6-71dd-479b-a70d-e41c38209582" />
+<img width="1842" height="517" alt="High level architecture of Cam Cam" src="https://github.com/user-attachments/assets/a94f1fb7-6240-4469-a16f-b5a1bfff8ff1" />
 
 ## Hardware Bill of Materials
 
