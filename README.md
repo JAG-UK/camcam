@@ -4,7 +4,7 @@ See it in action at https://cityrc.co.uk/camcam
 
 ## Overview
 
-TODO: Put a diagram here, including TLS broadcast and iFrame on website
+<img width="1356" height="362" alt="camcam_diagram" src="https://github.com/user-attachments/assets/c3122eb6-71dd-479b-a70d-e41c38209582" />
 
 ## Hardware Bill of Materials
 
@@ -76,7 +76,7 @@ It is quite likely that you will experience issues with the `Content Security Po
 
 ### Cloud server software:
 
-The software supports local testing over HTTP so that you can make changes or make sure thigs are OK before gettign into cloud server configuration.
+The software supports local testing over HTTP so that you can make changes or make sure thigs are OK before getting into cloud server configuration, DNS and TLS configuration and so on.
 
 Simply set all the env vars in a terminal and then `docker comopose up --build` and it should all run. Errors will be reported in the terminal.
 
